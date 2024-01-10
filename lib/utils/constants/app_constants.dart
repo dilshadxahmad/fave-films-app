@@ -1,6 +1,5 @@
 class AppConstants {
-  static const String assetIcons = 'assets/icons/';
-  static const String assetImages = 'assets/images/';
-  static const String assetSvgIcons = 'assets/SvgIcons/';
-  static const String textFont = 'Poppins';
+  static const String assetImagesUrl = 'assets/images/';
+  static const String poppinsFont = 'Poppins';
+  static const String ombdApiKey = '1838ba9a';
 }

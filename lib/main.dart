@@ -1,3 +1,5 @@
+import 'package:fave_films/config/theme_config.dart';
+import 'package:fave_films/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -12,12 +14,10 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       builder: (context, child) {
-        return const MaterialApp(
-          home: Scaffold(
-            body: Center(
-              child: Text('Hello World!'),
-            ),
-          ),
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeConfig.darkTheme(),
+          home: const OnboardingScreen(),
         );
       },
     );
