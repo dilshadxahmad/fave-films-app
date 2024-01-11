@@ -48,7 +48,11 @@ class ThemeConfig {
       chipTheme: ChipThemeData(
         disabledColor: Colors.transparent,
         selectedColor: AppColors.primaryBlue,
-        shape: const StadiumBorder(),
+        shape: const StadiumBorder(
+          side: BorderSide(
+            color: AppColors.lightGrey,
+          ),
+        ),
         showCheckmark: false,
         labelStyle: TextStyle(
           fontSize: 14.sp,

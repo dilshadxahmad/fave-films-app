@@ -16,6 +16,10 @@ class HomeScreen extends StatelessWidget {
         title: const Text("Fave Films"),
         actions: [
           IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.light_mode_outlined),
+          ),
+          IconButton(
             onPressed: () {
               Get.to(() => const FavMoviesScreen());
             },
