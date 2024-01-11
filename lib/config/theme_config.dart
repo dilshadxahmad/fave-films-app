@@ -22,27 +22,38 @@ class ThemeConfig {
         size: 36.h,
       ),
       appBarTheme: AppBarTheme(
-        toolbarHeight: 100.h,
         iconTheme: IconThemeData(
-          size: 24.sp,
           fill: 0,
-          color: AppColors.primaryBlue,
+          color: AppColors.white,
+          size: 24.sp,
         ),
-        actionsIconTheme: const IconThemeData(
-          color: AppColors.primaryBlue,
-          fill: 0.5,
-        ),
-        backgroundColor: AppColors.orange,
-        surfaceTintColor: Colors.transparent,
-        // titleSpacing: 16.w,
         titleTextStyle: TextStyle(
-          fontSize: 20.sp,
+          fontSize: 22.sp,
           color: AppColors.primaryBlue,
+          fontWeight: FontWeight.w700,
         ),
+        actionsIconTheme: IconThemeData(
+          color: AppColors.white,
+          size: 24.sp,
+        ),
+        backgroundColor: AppColors.black,
+        surfaceTintColor: Colors.transparent,
+        titleSpacing: 8.w,
+        centerTitle: false,
       ),
       progressIndicatorTheme: ProgressIndicatorThemeData(
         color: AppColors.primaryBlue,
         linearTrackColor: AppColors.primaryBlue.withOpacity(0.25),
+      ),
+      chipTheme: ChipThemeData(
+        disabledColor: Colors.transparent,
+        selectedColor: AppColors.primaryBlue,
+        shape: const StadiumBorder(),
+        showCheckmark: false,
+        labelStyle: TextStyle(
+          fontSize: 14.sp,
+          color: AppColors.lightGrey,
+        ),
       ),
 
       ///////////////////////
@@ -124,6 +135,11 @@ class ThemeConfig {
           ),
         ),
       ),
+
+      ///////////////////////
+      /// Other Themes ///
+      ///////////////////////
+
       dividerTheme: DividerThemeData(
         color: AppColors.grey,
         thickness: 0.5.h,
@@ -158,9 +174,9 @@ class ThemeConfig {
         labelPadding: EdgeInsets.all(8.h),
       ),
       drawerTheme: DrawerThemeData(
-        backgroundColor: AppColors.primaryBlue,
+        backgroundColor: AppColors.black,
         surfaceTintColor: Colors.transparent,
-        width: 348.w,
+        width: 200.w,
         shape: const LinearBorder(),
       ),
       snackBarTheme: SnackBarThemeData(
@@ -238,11 +254,11 @@ class ThemeConfig {
       ///////////////////////
 
       textTheme: TextTheme(
-        // Display Styles
+        /// Display Styles
         displayLarge: TextStyle(
           color: AppColors.white,
-          fontSize: 24.sp,
-          fontWeight: FontWeight.normal,
+          fontSize: 23.sp,
+          fontWeight: FontWeight.w600,
           height: 1.5,
         ),
         displaySmall: TextStyle(
@@ -252,30 +268,28 @@ class ThemeConfig {
           height: 1.75,
         ),
 
-        headlineMedium: TextStyle(
-          fontFamily: AppConstants.poppinsFont,
+        /// Label Styles
+        labelLarge: TextStyle(
+          color: AppColors.white,
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w600,
+        ),
+        labelMedium: TextStyle(
           color: AppColors.white,
           fontSize: 14.sp,
+          fontWeight: FontWeight.w600,
+        ),
+        labelSmall: TextStyle(
+          color: AppColors.white,
+          fontSize: 14.sp,
+          decoration: TextDecoration.underline,
+          fontWeight: FontWeight.w400,
         ),
 
         ////////////////////////////////////////////////
         displayMedium: TextStyle(
           color: AppColors.primaryBlue,
           fontSize: 32.sp,
-        ),
-
-        // Label Styles
-        labelLarge: TextStyle(
-          color: AppColors.primaryBlue,
-          fontSize: 16.sp,
-          fontWeight: FontWeight.w600,
-        ),
-        labelSmall: TextStyle(
-          color: AppColors.primaryBlue,
-          fontSize: 14.sp,
-          fontFamily: AppConstants.poppinsFont,
-          decoration: TextDecoration.underline,
-          fontWeight: FontWeight.w700,
         ),
 
         // Body Styles
@@ -297,7 +311,10 @@ class ThemeConfig {
         ),
 
         // Headline Styles
-
+        headlineMedium: TextStyle(
+          color: AppColors.white,
+          fontSize: 14.sp,
+        ),
         headlineSmall: TextStyle(
           color: AppColors.primaryBlue,
           fontSize: 12.sp,

@@ -1,3 +1,6 @@
+import 'package:fave_films/utils/constants/app_constants.dart';
+import 'package:fave_films/utils/constants/app_images.dart';
+
 class Movie {
   final int id;
   final String title;
@@ -16,30 +19,30 @@ class Movie {
 final mockMovies = [
   Movie(
     id: 1,
-    title: "Lord of Rings",
+    title: "Leo",
     releaseDate: DateTime.parse("2012-02-27"),
     overview: "overview",
-    posterImageUrl: "posterImageUrl",
+    posterImageUrl: AppConstants.assetImagesUrl + AppImages.moviePoster,
   ),
   Movie(
     id: 2,
-    title: "Lord of Rings",
+    title: "Freelance",
     releaseDate: DateTime.parse("2012-02-27"),
     overview: "overview",
-    posterImageUrl: "posterImageUrl",
+    posterImageUrl: AppConstants.assetImagesUrl + AppImages.moviePoster2,
   ),
   Movie(
     id: 3,
-    title: "Lord of Rings",
+    title: "Dead for a Dollar",
     releaseDate: DateTime.parse("2012-02-27"),
     overview: "overview",
-    posterImageUrl: "posterImageUrl",
+    posterImageUrl: AppConstants.assetImagesUrl + AppImages.moviePoster3,
   ),
   Movie(
     id: 4,
-    title: "Lord of Rings",
+    title: "Exorcist",
     releaseDate: DateTime.parse("2012-02-27"),
     overview: "overview",
-    posterImageUrl: "posterImageUrl",
+    posterImageUrl: AppConstants.assetImagesUrl + AppImages.moviePoster4,
   ),
 ];

@@ -4,6 +4,7 @@ import 'package:fave_films/utils/constants/app_images.dart';
 import 'package:fave_films/widgets/buttons/special_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -39,13 +40,9 @@ class OnboardingScreen extends StatelessWidget {
             SizedBox(height: 16.h),
             SpecialButton(
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute<void>(
-                    builder: (BuildContext context) => const HomeScreen(),
-                  ),
-                );
+                Get.to(() => const HomeScreen());
               },
-              child: Icon(Icons.chevron_right_rounded),
+              child: const Icon(Icons.chevron_right_rounded),
             ),
             SizedBox(height: 32.h),
           ],
