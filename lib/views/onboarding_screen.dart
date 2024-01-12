@@ -1,4 +1,4 @@
-import 'package:fave_films/screens/home_screen.dart';
+import 'package:fave_films/views/home_screen.dart';
 import 'package:fave_films/utils/constants/app_constants.dart';
 import 'package:fave_films/utils/constants/app_images.dart';
 import 'package:fave_films/widgets/buttons/special_button.dart';

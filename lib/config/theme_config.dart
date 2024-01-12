@@ -14,6 +14,8 @@ class ThemeConfig {
       canvasColor: Colors.transparent,
       scaffoldBackgroundColor: AppColors.black,
       fontFamily: AppConstants.poppinsFont,
+      highlightColor: AppColors.white.withOpacity(0.1),
+
       colorScheme: ColorScheme.fromSwatch(
         backgroundColor: AppColors.white,
       ),
@@ -45,6 +47,7 @@ class ThemeConfig {
         color: AppColors.primaryBlue,
         linearTrackColor: AppColors.primaryBlue.withOpacity(0.25),
       ),
+
       chipTheme: ChipThemeData(
         disabledColor: Colors.transparent,
         selectedColor: AppColors.primaryBlue,
@@ -286,7 +289,6 @@ class ThemeConfig {
         labelSmall: TextStyle(
           color: AppColors.white,
           fontSize: 14.sp,
-          decoration: TextDecoration.underline,
           fontWeight: FontWeight.w400,
         ),
 
