@@ -1,9 +1,10 @@
 import 'package:fave_films/controllers/home_screen_controller.dart';
-import 'package:fave_films/utils/constants/app_colors.dart';
-import 'package:fave_films/utils/constants/app_constants.dart';
+import 'package:fave_films/res/colors/app_colors.dart';
+import 'package:fave_films/res/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class FavMoviesScreen extends StatelessWidget {
   const FavMoviesScreen({super.key});
@@ -116,9 +117,8 @@ class FavMoviesScreen extends StatelessWidget {
                                 ),
                           ),
                           Text(
-                            homeScreenController
-                                .favoriteMovies[index].releaseDate
-                                .toString(),
+                            DateFormat('yyyy').format(homeScreenController
+                                .favoriteMovies[index].releaseDate),
                             style: Theme.of(context).textTheme.labelSmall,
                           ),
                         ],

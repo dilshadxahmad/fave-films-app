@@ -3,8 +3,8 @@ import 'package:fave_films/models/movie.dart';
 import 'package:fave_films/network/response_models/movies_response_model.dart';
 import 'package:fave_films/views/fav_movies_screen.dart';
 import 'package:fave_films/services/movies_api_service.dart';
-import 'package:fave_films/utils/constants/app_colors.dart';
-import 'package:fave_films/utils/constants/app_constants.dart';
+import 'package:fave_films/res/colors/app_colors.dart';
+import 'package:fave_films/res/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -126,10 +126,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 snapshot.data!.results?[index].overview ?? "",
                             posterImageUrl:
                                 snapshot.data!.results?[index].posterPath ?? "",
-                            imdbRating: snapshot
-                                    .data!.results?[index].voteAverage
-                                    .toString() ??
-                                "",
+                            imdbRating:
+                                (snapshot.data!.results?[index].voteAverage ??
+                                        0.0)
+                                    .toStringAsFixed(1),
                           );
                           return Padding(
                             padding: EdgeInsets.only(right: 16.w, bottom: 16.w),
@@ -175,25 +175,31 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Positioned(
                                         top: 4.h,
                                         right: 4.w,
-                                        child: IconButton(
-                                          onPressed: () {
-                                            if (_homeScreenController
-                                                .favoriteMovies
-                                                .contains(movie)) {
+                                        child: Obx(
+                                          () => IconButton(
+                                            onPressed: () {
+                                              if (_homeScreenController
+                                                  .favoriteMovieIds
+                                                  .contains(movie.id)) {
+                                                _homeScreenController
+                                                    .removeFromFavorites(movie);
+                                                _homeScreenController
+                                                    .removeFromFavoriteMovieIds(
+                                                        movie.id);
+                                              } else {
+                                                _homeScreenController
+                                                    .addToFavorites(movie);
+                                                _homeScreenController
+                                                    .addToFavoriteMovieIds(
+                                                        movie.id);
+                                              }
+                                            },
+                                            color: AppColors.orange,
+                                            iconSize: 24.sp,
+                                            icon: Icon(
                                               _homeScreenController
-                                                  .removeFromFavorites(movie);
-                                            } else {
-                                              _homeScreenController
-                                                  .addToFavorites(movie);
-                                            }
-                                          },
-                                          color: AppColors.orange,
-                                          iconSize: 24.sp,
-                                          icon: Obx(
-                                            () => Icon(
-                                              _homeScreenController
-                                                      .favoriteMovies
-                                                      .contains(movie)
+                                                      .favoriteMovieIds
+                                                      .contains(movie.id)
                                                   ? Icons.favorite_rounded
                                                   : Icons
                                                       .favorite_border_rounded,
@@ -231,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                       ),
                                       Text(
-                                        formatted.toString(),
+                                        formatted,
                                         style: Theme.of(context)
                                             .textTheme
                                             .labelSmall,
@@ -247,7 +253,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       color: AppColors.white,
                                     ),
                                     child: Text(
-                                      "★ ${snapshot.data!.results?[index].voteAverage?.toStringAsFixed(1)} /10",
+                                      "★ ${snapshot.data!.results?[index].voteAverage?.toStringAsFixed(1)} IMDb",
                                       style: Theme.of(context)
                                           .textTheme
                                           .labelMedium

@@ -1,15 +1,16 @@
 import 'package:fave_films/models/movie.dart';
-import 'package:fave_films/network/response_models/movies_response_model.dart';
-import 'package:fave_films/services/movies_api_service.dart';
 import 'package:get/get.dart';
 
 class HomeScreenController extends GetxController {
-  final movies = <MoviesResponseModel>[].obs;
+  final favoriteMovieIds = <int>[].obs;
   final favoriteMovies = <Movie>[].obs;
 
-  Future<void> getMovies() async {
-    var response = await MoviesApiService.getMovies(type: "popular");
-    movies.add(response);
+  void addToFavoriteMovieIds(int id) {
+    favoriteMovieIds.add(id);
+  }
+
+  void removeFromFavoriteMovieIds(int id) {
+    favoriteMovieIds.remove(id);
   }
 
   void addToFavorites(Movie movie) {

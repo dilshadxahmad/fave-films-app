@@ -1,5 +1,5 @@
-import 'package:fave_films/utils/constants/app_colors.dart';
-import 'package:fave_films/utils/constants/app_constants.dart';
+import 'package:fave_films/res/colors/app_colors.dart';
+import 'package:fave_films/res/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

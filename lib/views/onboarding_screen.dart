@@ -1,6 +1,6 @@
 import 'package:fave_films/views/home_screen.dart';
-import 'package:fave_films/utils/constants/app_constants.dart';
-import 'package:fave_films/utils/constants/app_images.dart';
+import 'package:fave_films/res/constants/app_constants.dart';
+import 'package:fave_films/res/images/app_images.dart';
 import 'package:fave_films/widgets/buttons/special_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
