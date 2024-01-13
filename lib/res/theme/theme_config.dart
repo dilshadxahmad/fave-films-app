@@ -15,9 +15,9 @@ class ThemeConfig {
       scaffoldBackgroundColor: AppColors.black,
       fontFamily: AppConstants.poppinsFont,
       highlightColor: AppColors.white.withOpacity(0.1),
-
       colorScheme: ColorScheme.fromSwatch(
         backgroundColor: AppColors.white,
+        errorColor: AppColors.orange,
       ),
       iconTheme: IconThemeData(
         color: AppColors.black,
@@ -292,6 +292,16 @@ class ThemeConfig {
           fontWeight: FontWeight.w400,
         ),
 
+        bodyLarge: TextStyle(
+          color: AppColors.white,
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w500,
+        ),
+        bodyMedium: TextStyle(
+          color: AppColors.white,
+          fontSize: 14.sp,
+        ),
+
         ////////////////////////////////////////////////
         displayMedium: TextStyle(
           color: AppColors.primaryBlue,
@@ -299,15 +309,6 @@ class ThemeConfig {
         ),
 
         // Body Styles
-        bodyLarge: TextStyle(
-          color: AppColors.primaryBlue,
-          fontSize: 24.sp,
-          fontWeight: FontWeight.w500,
-        ),
-        bodyMedium: TextStyle(
-          color: AppColors.primaryBlue,
-          fontSize: 16.sp,
-        ),
         bodySmall: TextStyle(
           color: AppColors.primaryBlue,
           fontSize: 14.sp,

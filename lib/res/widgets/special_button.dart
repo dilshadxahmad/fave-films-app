@@ -1,6 +1,6 @@
 import 'package:fave_films/res/colors/app_colors.dart';
-import 'package:fave_films/res/constants/app_constants.dart';
 import 'package:fave_films/res/images/app_images.dart';
+import 'package:fave_films/res/urls/app_url.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -28,7 +28,7 @@ class SpecialButton extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             Image.asset(
-              AppConstants.assetImagesUrl + AppImages.iconButtonBG,
+              AppUrl.assetImagesUrl + AppImages.iconButtonBG,
             ),
             child,
           ],

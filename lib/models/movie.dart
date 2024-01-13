@@ -1,7 +1,7 @@
 class Movie {
   final int id;
   final String title;
-  final DateTime releaseDate;
+  final String releaseDate;
   final String overview;
   final String posterImageUrl;
   final String imdbRating;

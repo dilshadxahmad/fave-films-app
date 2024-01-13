@@ -1,27 +1,26 @@
-import 'package:fave_films/controllers/home_screen_controller.dart';
+import 'package:fave_films/controllers/home/home_screen_controller.dart';
 import 'package:fave_films/res/colors/app_colors.dart';
-import 'package:fave_films/res/constants/app_constants.dart';
+import 'package:fave_films/res/urls/app_url.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class FavMoviesScreen extends StatelessWidget {
   const FavMoviesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final homeScreenController = Get.put(HomeScreenController());
+    final homeScreenController = Get.put(HomeController());
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Favorites"),
+        title: Text('favorites'.tr),
       ),
       body: Obx(
         () => RawScrollbar(
           radius: Radius.circular(10.r),
           child: ListView.builder(
             padding: EdgeInsets.all(16.w),
-            itemCount: homeScreenController.favoriteMovies.length,
+            itemCount: homeScreenController.favoriteMovieIds.length,
             itemBuilder: (context, index) {
               return Padding(
                 padding: EdgeInsets.only(bottom: 16.w),
@@ -37,7 +36,7 @@ class FavMoviesScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(16.r),
                               image: DecorationImage(
                                 image: NetworkImage(
-                                  AppConstants.tmbdImagesUrl +
+                                  AppUrl.tmbdImagesUrl +
                                       (homeScreenController
                                           .favoriteMovies[index]
                                           .posterImageUrl),
@@ -66,25 +65,32 @@ class FavMoviesScreen extends StatelessWidget {
                             right: 4.w,
                             child: IconButton(
                               onPressed: () {
-                                if (homeScreenController.favoriteMovies
+                                if (homeScreenController.favoriteMovieIds
                                     .contains(homeScreenController
-                                        .favoriteMovies[index])) {
+                                        .favoriteMovieIds[index])) {
                                   homeScreenController.removeFromFavorites(
                                       homeScreenController
                                           .favoriteMovies[index]);
+                                  homeScreenController
+                                      .removeFromFavoriteMovieIds(
+                                          homeScreenController
+                                              .favoriteMovies[index].id);
                                 } else {
                                   homeScreenController.addToFavorites(
                                       homeScreenController
                                           .favoriteMovies[index]);
+                                  homeScreenController.addToFavoriteMovieIds(
+                                      homeScreenController
+                                          .favoriteMovies[index].id);
                                 }
                               },
                               color: AppColors.orange,
                               iconSize: 24.sp,
                               icon: Obx(
                                 () => Icon(
-                                  homeScreenController.favoriteMovies.contains(
-                                          homeScreenController
-                                              .favoriteMovies[index])
+                                  homeScreenController.favoriteMovieIds
+                                          .contains(homeScreenController
+                                              .favoriteMovieIds[index])
                                       ? Icons.favorite_rounded
                                       : Icons.favorite_border_rounded,
                                 ),
@@ -107,7 +113,7 @@ class FavMoviesScreen extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            'released : ',
+                            '${'released'.tr} : ',
                             style: Theme.of(context)
                                 .textTheme
                                 .labelSmall
@@ -117,8 +123,8 @@ class FavMoviesScreen extends StatelessWidget {
                                 ),
                           ),
                           Text(
-                            DateFormat('yyyy').format(homeScreenController
-                                .favoriteMovies[index].releaseDate),
+                            homeScreenController
+                                .favoriteMovies[index].releaseDate,
                             style: Theme.of(context).textTheme.labelSmall,
                           ),
                         ],

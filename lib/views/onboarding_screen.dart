@@ -1,7 +1,7 @@
-import 'package:fave_films/views/home_screen.dart';
-import 'package:fave_films/res/constants/app_constants.dart';
+import 'package:fave_films/res/routes/route_name.dart';
 import 'package:fave_films/res/images/app_images.dart';
-import 'package:fave_films/widgets/buttons/special_button.dart';
+import 'package:fave_films/res/urls/app_url.dart';
+import 'package:fave_films/res/widgets/special_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -18,8 +18,8 @@ class OnboardingScreen extends StatelessWidget {
         padding: EdgeInsets.all(16.w),
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(AppConstants.assetImagesUrl +
-                AppImages.onboardingScreenIllustration),
+            image: AssetImage(
+                AppUrl.assetImagesUrl + AppImages.onboardingScreenIllustration),
             fit: BoxFit.cover,
           ),
         ),
@@ -27,20 +27,20 @@ class OnboardingScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Text(
-              "Your Rocketship into the Adventurous World of Films.",
+              'your_rocketship_onboarding'.tr,
               style: Theme.of(context).textTheme.displayLarge,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 10.h),
             Text(
-              "Continue and explore the top rated movies, curate your favorites list and more.",
+              'continue_and_explore_onboarding'.tr,
               style: Theme.of(context).textTheme.displaySmall,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 16.h),
             SpecialButton(
               onPressed: () {
-                Get.to(() => const HomeScreen());
+                Get.toNamed(RouteName.homeScreen);
               },
               child: const Icon(Icons.chevron_right_rounded),
             ),
