@@ -14,8 +14,8 @@ class NetworkApiService implements IApiService {
     dynamic decodedResponse;
     try {
       final response = await http
-          .get(Uri.parse('$url'
-              'asd2121?${ApiKeys.tmbdApiKey}&language=${Get.locale?.toLanguageTag()}'))
+          .get(Uri.parse(
+              '$url?${ApiKeys.tmbdApiKey}&language=${Get.locale?.toLanguageTag()}'))
           .timeout(const Duration(seconds: 20));
       decodedResponse = _returnResponse(response);
     } on SocketException {
