@@ -5,6 +5,7 @@ class AppTranslations extends Translations {
   Map<String, Map<String, String>> get keys => {
         'en_US': {
           'app_name': 'Fave Films',
+          'app_version': 'v 1.0',
           'your_rocketship_onboarding':
               'Your Rocketship into the Adventurous World of Films.',
           'continue_and_explore_onboarding':
@@ -20,6 +21,9 @@ class AppTranslations extends Translations {
           'no_data': 'No data',
           'favorites': 'Favorites',
           'retry': 'Retry',
+          'no_favorites_added_yet': 'Uh Oh! No favorites added yet.',
+          'favorites_cleared': 'Favorites are cleared.',
+          'bro': 'Bro!',
         },
       };
 }

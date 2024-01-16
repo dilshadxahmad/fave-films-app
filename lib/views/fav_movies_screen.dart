@@ -1,6 +1,8 @@
 import 'package:fave_films/controllers/home/home_screen_controller.dart';
+import 'package:fave_films/models/favorite/movie.dart';
 import 'package:fave_films/res/colors/app_colors.dart';
 import 'package:fave_films/res/urls/app_url.dart';
+import 'package:fave_films/res/widgets/movie_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -10,147 +12,83 @@ class FavMoviesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeScreenController = Get.put(HomeController());
+    final homeScreenController = Get.put(HomeScreenController());
     return Scaffold(
       appBar: AppBar(
         title: Text('favorites'.tr),
+        actions: [
+          if (homeScreenController.rxFavMovies.isNotEmpty)
+            IconButton(
+              onPressed: () async {
+                homeScreenController.clearFavMovies();
+                Get.snackbar(
+                  "bro".tr,
+                  "favorites_cleared".tr,
+                  colorText: Theme.of(context).textTheme.bodyMedium?.color,
+                  duration: const Duration(seconds: 1),
+                );
+              },
+              icon: const Icon(Icons.delete_outline_rounded),
+            ),
+        ],
       ),
       body: Obx(
-        () => RawScrollbar(
-          radius: Radius.circular(10.r),
-          child: ListView.builder(
-            padding: EdgeInsets.all(16.w),
-            itemCount: homeScreenController.favoriteMovieIds.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: EdgeInsets.only(bottom: 16.w),
-                child: SizedBox(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Stack(
-                        children: [
-                          Container(
-                            height: 195.h,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16.r),
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  AppUrl.tmbdImagesUrl +
-                                      (homeScreenController
-                                          .favoriteMovies[index]
-                                          .posterImageUrl),
-                                ),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: 195.h,
-                            decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [
-                                  Color(0x30000000),
-                                  Color(0x00000000),
-                                  Color(0x00000000),
-                                  Color(0x30000000),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            top: 4.h,
-                            right: 4.w,
-                            child: IconButton(
-                              onPressed: () {
-                                if (homeScreenController.favoriteMovieIds
-                                    .contains(homeScreenController
-                                        .favoriteMovieIds[index])) {
-                                  homeScreenController.removeFromFavorites(
-                                      homeScreenController
-                                          .favoriteMovies[index]);
-                                  homeScreenController
-                                      .removeFromFavoriteMovieIds(
-                                          homeScreenController
-                                              .favoriteMovies[index].id);
-                                } else {
-                                  homeScreenController.addToFavorites(
-                                      homeScreenController
-                                          .favoriteMovies[index]);
-                                  homeScreenController.addToFavoriteMovieIds(
-                                      homeScreenController
-                                          .favoriteMovies[index].id);
-                                }
-                              },
-                              color: AppColors.orange,
-                              iconSize: 24.sp,
-                              icon: Obx(
-                                () => Icon(
-                                  homeScreenController.favoriteMovieIds
-                                          .contains(homeScreenController
-                                              .favoriteMovieIds[index])
-                                      ? Icons.favorite_rounded
-                                      : Icons.favorite_border_rounded,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 8.h),
-                      Row(
-                        children: <Widget>[
-                          Flexible(
-                            child: Text(
-                              homeScreenController.favoriteMovies[index].title,
-                              style: Theme.of(context).textTheme.labelLarge,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            '${'released'.tr} : ',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelSmall
-                                ?.copyWith(
-                                  color: AppColors.lightGrey,
-                                  fontSize: 12.sp,
-                                ),
-                          ),
-                          Text(
-                            homeScreenController
-                                .favoriteMovies[index].releaseDate,
-                            style: Theme.of(context).textTheme.labelSmall,
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 4.h),
-                      Container(
-                        padding: EdgeInsets.all(6.w),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100.r),
-                          color: AppColors.white,
-                        ),
-                        child: Text(
-                          "★ ${homeScreenController.favoriteMovies[index].imdbRating} /10",
-                          style:
-                              Theme.of(context).textTheme.labelMedium?.copyWith(
-                                    color: AppColors.black,
-                                  ),
-                        ),
-                      ),
-                    ],
+        () {
+          if (homeScreenController.rxFavMovies.isNotEmpty) {
+            return ListView.builder(
+              itemCount: homeScreenController.rxFavMovies.length,
+              itemBuilder: (context, index) {
+                final movie = Movie(
+                  id: homeScreenController.rxFavMovies[index].id ?? 0,
+                  title: homeScreenController.rxFavMovies[index].title ?? "",
+                  releaseDate:
+                      homeScreenController.rxFavMovies[index].releaseDate ?? "",
+                  overview:
+                      homeScreenController.rxFavMovies[index].overview ?? "",
+                  posterImageUrl:
+                      homeScreenController.rxFavMovies[index].posterImageUrl ??
+                          "",
+                  imdbRating:
+                      (homeScreenController.rxFavMovies[index].imdbRating ??
+                              0.0)
+                          .toString(),
+                  isFav: true,
+                );
+                return MovieCardWidget(
+                  title: homeScreenController.rxFavMovies[index].title ?? '',
+                  backgroundImage: AppUrl.tmbdImagesUrl +
+                      (homeScreenController.rxFavMovies[index].posterImageUrl ??
+                          ''),
+                  releasedDate:
+                      homeScreenController.rxFavMovies[index].releaseDate ?? "",
+                  imdbRating:
+                      homeScreenController.rxFavMovies[index].imdbRating ?? "",
+                  overlayButton: IconButton(
+                    onPressed: () {
+                      homeScreenController.toggleFavorite(movie);
+                    },
+                    color: AppColors.orange,
+                    iconSize: 24.sp,
+                    icon: Icon(
+                      homeScreenController.isMovieFavorite(movie)
+                          ? Icons.favorite_rounded
+                          : Icons.favorite_border_rounded,
+                    ),
                   ),
-                ),
-              );
-            },
-          ),
-        ),
+                );
+              },
+            );
+          }
+          return Center(
+            child: Text(
+              'no_favorites_added_yet'.tr,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.error,
+                  ),
+            ),
+          );
+        },
       ),
     );
   }

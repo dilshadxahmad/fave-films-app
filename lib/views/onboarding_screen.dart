@@ -40,7 +40,7 @@ class OnboardingScreen extends StatelessWidget {
             SizedBox(height: 16.h),
             SpecialButton(
               onPressed: () {
-                Get.toNamed(RouteName.homeScreen);
+                Get.offAndToNamed(RouteName.homeScreen);
               },
               child: const Icon(Icons.chevron_right_rounded),
             ),

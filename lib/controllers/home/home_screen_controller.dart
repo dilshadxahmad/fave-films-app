@@ -1,16 +1,26 @@
+import 'dart:convert';
 import 'package:fave_films/data/exeptions/app_exception.dart';
 import 'package:fave_films/data/response/request_status.dart';
 import 'package:fave_films/models/home/filter_model.dart';
 import 'package:fave_films/models/home/movies_response_model.dart';
-import 'package:fave_films/models/movie.dart';
+import 'package:fave_films/models/favorite/movie.dart';
 import 'package:fave_films/repository/home/home_repository.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class HomeController extends GetxController {
+class HomeScreenController extends GetxController {
   final _api = HomeRepository();
+
   final rxRequestStatus = RequestStatus.loading.obs;
+
   final rxMoviesResponseModel = MoviesResponseModel().obs;
+
   Rx<AppException>? rxError;
+
+  final favoritesSPkey = 'fav_movies_sp';
+
+  final rxFavMovies = <Movie>[].obs;
+
   final rxFilters = [
     FilterModel(
       id: 1,
@@ -34,6 +44,12 @@ class HomeController extends GetxController {
     ),
   ].obs;
 
+  @override
+  void onInit() {
+    super.onInit();
+    _loadRxFavMoviesData();
+  }
+
   void setRxFilterValue(int index) {
     for (var filter in rxFilters) {
       filter.value = (index == filter.id);
@@ -43,10 +59,12 @@ class HomeController extends GetxController {
 
   void _setRxRequestStatus(RequestStatus value) =>
       {rxRequestStatus.value = value};
+
   void _setRxMoviesResponseModel(MoviesResponseModel value) =>
       {rxMoviesResponseModel.value = value};
 
   void getRxMovies(String movieType) {
+    _setRxRequestStatus(RequestStatus.loading);
     _api.getMovies(movieType).then((value) {
       _setRxRequestStatus(RequestStatus.completed);
       _setRxMoviesResponseModel(value);
@@ -56,22 +74,54 @@ class HomeController extends GetxController {
     });
   }
 
-  final favoriteMovieIds = <int>[].obs;
-  final favoriteMovies = <Movie>[].obs;
+  void _loadRxFavMoviesData() async {
+    final prefs = await SharedPreferences.getInstance();
 
-  void addToFavoriteMovieIds(int id) {
-    favoriteMovieIds.add(id);
+    final favoritesJson = prefs.getString(favoritesSPkey) ?? '[]';
+
+    final List<dynamic> favoritesData = json.decode(favoritesJson);
+
+    final favorites =
+        favoritesData.map((data) => Movie.fromJson(data)).toList();
+
+    rxFavMovies.clear();
+
+    rxFavMovies.addAll(favorites);
   }
 
-  void removeFromFavoriteMovieIds(int id) {
-    favoriteMovieIds.remove(id);
+  void toggleFavorite(Movie movie) {
+    bool isFavorite = isMovieFavorite(movie);
+
+    if (isFavorite) {
+      _removeFromFavorites(movie);
+    } else {
+      _addToFavorites(movie);
+    }
   }
 
-  void addToFavorites(Movie movie) {
-    favoriteMovies.insert(0, movie);
+  bool isMovieFavorite(Movie movie) {
+    return rxFavMovies.firstWhereOrNull((element) => element.id == movie.id) !=
+        null;
   }
 
-  void removeFromFavorites(Movie movie) {
-    favoriteMovies.remove(movie);
+  void _addToFavorites(Movie movie) {
+    rxFavMovies.add(movie);
+    _saveFavoriteMovies();
+  }
+
+  void _removeFromFavorites(Movie movie) {
+    rxFavMovies
+        .remove(rxFavMovies.firstWhere((element) => element.id == movie.id));
+    _saveFavoriteMovies();
+  }
+
+  void clearFavMovies() async {
+    rxFavMovies.clear();
+    _saveFavoriteMovies();
+  }
+
+  Future<void> _saveFavoriteMovies() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(favoritesSPkey, json.encode(rxFavMovies));
   }
 }
